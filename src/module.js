@@ -1,22 +1,44 @@
 import React from 'react';
 
 var SearchBar = React.createClass({
-    render: function() {
+    handleChange(){
+      console.log(this.refs.searchTextInput);
+      this.props.onUserInput(
+        this.refs.searchTextInput.value
+      )
+    },
+    render() {
         return (
             <form>
-                <input type="text" placeholder="Search..." />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={this.props.searchText}
+                  ref="searchTextInput"
+                  onChange={this.handleChange} />
             </form>
         );
     }
 });
 
 var SearchArea = React.createClass({
+  getInitialState(){
+    return {searchText:""}
+  },
+  handleUserInput(searchText){
+    this.setState({searchText});
+    console.log("searchText:");
+    console.log(searchText);
+  },
   render(){
     return(
       <div>
-          <h1>foo</h1>
-          <SearchBar />
+          <SearchBar
+            searchText={this.state.searchText}
+            onUserInput={this.handleUserInput}/>
+          <h1>fpp {this.state.searchText}</h1>
           <SearchResult results={this.props.results} />
+
       </div>
     );
   }
@@ -25,7 +47,10 @@ var SearchArea = React.createClass({
 var SearchResult = React.createClass({
     render(){
       var rows = this.props.results.map( item =>
-        <p>{item["3"].map(i=>i["2"]).join(" ")}</p>
+        <p>
+        <span>{item["2"]/item["1"]*100}%</span>
+        {item["3"].map(i=>i["2"]).join(" ")}
+        </p>
       )
       return(
         <div>
