@@ -7,9 +7,8 @@ var url = "http://api.netspeak.org/netspeak3/search?query=hello*&topk=30&nmin=2&
 var SearchBar = React.createClass({
     handleChange(){
       $.get(url, result =>{
-        console.log(result[0]["3"].map(i=>i["2"]).join(" "))
+        console.log(result)
       })
-      console.log(this.refs.searchTextInput);
       this.props.onUserInput(
         this.refs.searchTextInput.value
       )
@@ -36,8 +35,6 @@ class SearchArea extends React.Component {
   }
   handleUserInput(searchText){
     this.setState({searchText});
-    console.log("searchText:");
-    console.log(searchText);
   }
   render(){
     return(
