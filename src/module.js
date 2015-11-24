@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
+
+var url = "http://api.netspeak.org/netspeak3/search?query=hello*&topk=30&nmin=2&nmax=3&format=json"
 
 var SearchBar = React.createClass({
     handleChange(){
+      $.get(url, result =>{
+        console.log(result[0]["3"].map(i=>i["2"]).join(" "))
+      })
       console.log(this.refs.searchTextInput);
       this.props.onUserInput(
         this.refs.searchTextInput.value
@@ -22,15 +28,17 @@ var SearchBar = React.createClass({
     }
 });
 
-var SearchArea = React.createClass({
-  getInitialState(){
-    return {searchText:""}
-  },
+class SearchArea extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleUserInput = this.handleUserInput.bind(this);
+    this.state = {searchText: props.searchText};
+  }
   handleUserInput(searchText){
     this.setState({searchText});
     console.log("searchText:");
     console.log(searchText);
-  },
+  }
   render(){
     return(
       <div>
@@ -43,7 +51,8 @@ var SearchArea = React.createClass({
       </div>
     );
   }
-});
+}
+SearchArea.defaultProps = {searchText: ""};
 
 var SearchResult = React.createClass({
     render(){
