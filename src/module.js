@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 var SearchBar = React.createClass({
     handleChange(){
@@ -102,7 +103,7 @@ var SEARCHRESULTS = {
   "9":0,
   "10":""};
 
-React.render(
+ReactDOM.render(
     <SearchArea results={SEARCHRESULTS["4"]} />,
     document.getElementById('container')
 );
