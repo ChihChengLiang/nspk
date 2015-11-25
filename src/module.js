@@ -8,6 +8,29 @@ const ListItem = require('material-ui/lib/lists/list-item');
 
 var base_url = "http://api.netspeak.org/netspeak3/search?topk=30&format=json&query="
 
+let INSTRUCTIONS = [
+  {
+    example: <p>how to <strong>?</strong> this</p>,
+    instruction: <p>The <strong>?</strong> finds one word.</p>
+  },
+  {
+    example: <p>see <strong>...</strong> works</p>,
+    instruction: <p>The <strong>...</strong> find many words.</p>
+  },
+  {
+    example: <p>it&#39;s <strong>&#91;</strong> great well <strong>&#93;</strong></p>,
+    instruction: <p>The <strong>&#91;&#93;</strong> compare options.</p>
+  },
+  {
+    example: <p>and knows <strong>#</strong>much</p>,
+    instruction: <p>The <strong>#</strong> finds similar words.</p>
+  },
+  {
+    example: <p><strong>&#123;</strong> more show me <strong>&#125;</strong></p>,
+    instruction: <p>The <strong>&#123;&#125;</strong> check the order.</p>
+  }
+]
+
 var SearchBar = React.createClass({
     handleChange(){
       this.props.onUserInput(
@@ -16,14 +39,12 @@ var SearchBar = React.createClass({
     },
     render() {
         return (
-            <form>
-                <TextField
-                  type="text"
-                  placeholder="Search..."
-                  value={this.props.searchText}
-                  ref="searchTextInput"
-                  onChange={this.handleChange} />
-            </form>
+          <TextField
+            type="text"
+            placeholder="Search..."
+            value={this.props.searchText}
+            ref="searchTextInput"
+            onChange={this.handleChange} />
         );
     }
 });
@@ -89,7 +110,9 @@ var SearchResult = React.createClass({
           )
         })
       } else{
-        rows = <ListItem primaryText="No search result" />
+        rows = INSTRUCTIONS.map(item =>
+          <ListItem primaryText={item.example} secondaryText={item.instruction} />
+          )
       }
       return(
         <List>
