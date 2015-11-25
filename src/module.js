@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-var url = "http://api.netspeak.org/netspeak3/search?query=hello*&topk=30&nmin=2&nmax=3&format=json"
+var base_url = "http://api.netspeak.org/netspeak3/search?topk=30&nmin=2&nmax=3&format=json&query="
 
 var SearchBar = React.createClass({
     handleChange(){
@@ -34,13 +34,13 @@ class SearchArea extends React.Component {
     };
   }
   handleUserInput(searchText){
+    var url = base_url + encodeURI(searchText);
     $.getJSON(url, result =>{
       this.setState({
         searchResults:result[4]
       });
     }.bind(this))
     this.setState({searchText});
-    console.log(this.state)
   }
   render(){
     return(
@@ -48,7 +48,7 @@ class SearchArea extends React.Component {
           <SearchBar
             searchText={this.state.searchText}
             onUserInput={this.handleUserInput}/>
-          <h1>fpp {this.state.searchText}</h1>
+          <h1>Searching: &quot;{this.state.searchText}&quot;</h1>
           <SearchResult results={this.state.searchResults} />
 
       </div>
@@ -62,7 +62,6 @@ SearchArea.defaultProps = {
 
 var SearchResult = React.createClass({
     render(){
-      console.log(this.props.results);
       var rows = this.props.results.map( item =>
         <p>
         <span>{item["2"]/item["1"]*100}%</span>
