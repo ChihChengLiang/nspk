@@ -37,7 +37,7 @@ class SearchArea extends React.Component {
     var url = base_url + encodeURI(searchText);
     $.getJSON(url, result =>{
       this.setState({
-        searchResults:result[4]
+        searchResults: result
       });
     }.bind(this))
     this.setState({searchText});
@@ -57,20 +57,37 @@ class SearchArea extends React.Component {
 }
 SearchArea.defaultProps = {
   searchText: "",
-  searchResults: [],
+  searchResults: {},
 };
 
 var SearchResult = React.createClass({
     render(){
-      var rows = this.props.results.map( item =>
-        <tr>
-          <td>{item["2"]}</td>
-          <td>{item["3"].map(i=>i["2"]).join(" ")}</td>
-        </tr>
-      )
+      var rows;
+      var total = this.props.results[7];
+      if(this.props.results.hasOwnProperty(4)){
+        rows = this.props.results[4].map( item =>{
+          return(
+          <tr>
+            <td>{(item[2]/ total *100).toFixed(1)}%</td>
+            <td>{item[2]}</td>
+            <td>{item[3].map( i =>{
+              if(i[1]==0){
+                return i[2] + " "
+              } else {
+                return <strong>{i[2]} </strong>
+              }
+              })}
+            </td>
+          </tr>)
+        })
+      } else{
+        rows = <tr><td>No search result</td></tr>
+      }
       return(
         <table>
-        {rows}
+          <tbody>
+            {rows}
+          </tbody>
         </table>
       )
     }
