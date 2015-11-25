@@ -1,19 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+const TextField = require('material-ui/lib/text-field');
+const List = require('material-ui/lib/lists/list');
+const ListDivider = require('material-ui/lib/lists/list-divider');
+const ListItem = require('material-ui/lib/lists/list-item');
 
 var base_url = "http://api.netspeak.org/netspeak3/search?topk=30&format=json&query="
 
 var SearchBar = React.createClass({
     handleChange(){
       this.props.onUserInput(
-        this.refs.searchTextInput.value
+        this.refs.searchTextInput.getValue()
       )
     },
     render() {
         return (
             <form>
-                <input
+                <TextField
                   type="text"
                   placeholder="Search..."
                   value={this.props.searchText}
@@ -48,7 +52,6 @@ class SearchArea extends React.Component {
           <SearchBar
             searchText={this.state.searchText}
             onUserInput={this.handleUserInput}/>
-          <h1>Searching: &quot;{this.state.searchText}&quot;</h1>
           <SearchResult results={this.state.searchResults} />
 
       </div>
@@ -67,28 +70,31 @@ var SearchResult = React.createClass({
       if(this.props.results.hasOwnProperty(4)){
         rows = this.props.results[4].map( item =>{
           return(
-          <tr>
-            <td>{(item[2]/ total *100).toFixed(1)}%</td>
-            <td>{item[2]}</td>
-            <td>{item[3].map( i =>{
-              if(i[1]==0){
-                return i[2] + " "
-              } else {
-                return <strong>{i[2]} </strong>
+            <ListItem
+              secondaryText={
+                <div>
+                  <span>{(item[2]/ total *100).toFixed(1)}%</span>
+                  <small style={{float: "right"}}>{item[2]}</small>
+                </div>
               }
-              })}
-            </td>
-          </tr>)
+              primaryText={
+                item[3].map( i =>{
+                  if(i[1]==0){
+                    return i[2] + " "
+                  } else {
+                    return <strong>{i[2]} </strong>
+                  }
+                })
+              } />
+          )
         })
       } else{
-        rows = <tr><td>No search result</td></tr>
+        rows = <ListItem primaryText="No search result" />
       }
       return(
-        <table>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+        <List>
+          {rows}
+        </List>
       )
     }
 });
