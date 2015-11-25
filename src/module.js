@@ -59,7 +59,7 @@ class SearchArea extends React.Component {
     };
   }
   handleUserInput(searchText){
-    var url = base_url + encodeURI(searchText);
+    var url = base_url + encodeURIComponent(searchText);
     $.getJSON(url, result =>{
       this.setState({
         searchResults: result
