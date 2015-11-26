@@ -1,6 +1,6 @@
 # netspeak-extension
 
-Awesomeness of [Netspeak](http://www.netspeak.org/) in a Chrome extension.
+Get you all the awesomeness of [Netspeak](http://www.netspeak.org/) in a Chrome extension.
 
 ## To use
 
