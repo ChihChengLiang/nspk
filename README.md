@@ -2,6 +2,8 @@
 
 Get you all the awesomeness of [Netspeak](http://www.netspeak.org/) in a Chrome extension.
 
+![](demo.png)
+
 ## To use
 
 1. clone this project.
