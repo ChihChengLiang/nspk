@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-const TextField = require('material-ui/lib/text-field');
-const List = require('material-ui/lib/lists/list');
-const ListDivider = require('material-ui/lib/lists/list-divider');
-const ListItem = require('material-ui/lib/lists/list-item');
+import TextField from 'material-ui/lib/text-field';
+import List from 'material-ui/lib/lists/list';
+import ListDivider from 'material-ui/lib/lists/list-divider';
+import ListItem from 'material-ui/lib/lists/list-item';
 
 var base_url = "http://api.netspeak.org/netspeak3/search?topk=30&format=json&query="
 
